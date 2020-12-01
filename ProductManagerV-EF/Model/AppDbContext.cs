@@ -24,8 +24,8 @@ namespace ProductManagerV_EF.Model
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProductCategory>().HasKey(c => new { c.ProductId, c.CategoryId });
+
             modelBuilder.Entity<CategorySubCategory>().HasKey(c => new { c.CategoryId, c.SubCategoryId });
         }
-
     }
 }

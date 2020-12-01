@@ -11,6 +11,10 @@ namespace ProductManagerV_EF.Model
             CategoryName = categoryName;
         }
 
+        public Category()
+        {
+        }
+
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public int Inventory { get; set; }

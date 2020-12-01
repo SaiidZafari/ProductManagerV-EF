@@ -11,6 +11,8 @@ namespace ProductManagerV_EF.Model
             Name = name;
         }
 
+        public SubCategory(){}
+
         public int SubCategoryId { get; set; }
         public string Name { get; set; }
 
