@@ -1239,24 +1239,25 @@ namespace ProductManagerV_EF
 
         private static int ControlAndAddCategories(string category)
         {
-            DataSet dataSet = new DataSet();
+            //DataSet dataSet = new DataSet();
 
             int addToDb = 2;
 
-            string sqlCommandText = "Select * From Categories";
+            //string sqlCommandText = "Select * From Categories";
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            //using (SqlConnection connection = new SqlConnection(connectionString))
+            //{
+            //    SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommandText, connection);
+
+            //    dataAdapter.Fill(dataSet, "Categories");
+            //}
+
+            var db = new AppDbContext();
+
+            foreach (var categories in db.Categories)
             {
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommandText, connection);
 
-                dataAdapter.Fill(dataSet, "Categories");
-            }
-
-
-            foreach (DataRow dataRow in dataSet.Tables["Categories"].Rows)
-            {
-
-                if (dataRow["Category"].ToString() == category)
+                if (categories.CategoryName == category)
                 {
                     addToDb = 0;
                     break;
@@ -1274,33 +1275,26 @@ namespace ProductManagerV_EF
 
         private static int AddCategories(string category)
         {
-            string sqlCommandText = "spAddCategory";
+            //string sqlCommandText = "spAddCategory";
             int addToDb;
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlCommand command = new SqlCommand(sqlCommandText, connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@Category", category);
-                command.Parameters.AddWithValue("@Inventory", 0);
-                connection.Open();
-                addToDb = command.ExecuteNonQuery();
-            }
-
+            //using (SqlConnection connection = new SqlConnection(connectionString))
+            //{
+            //    SqlCommand command = new SqlCommand(sqlCommandText, connection);
+            //    command.CommandType = CommandType.StoredProcedure;
+            //    command.Parameters.AddWithValue("@Category", category);
+            //    command.Parameters.AddWithValue("@Inventory", 0);
+            //    connection.Open();
+            //    addToDb = command.ExecuteNonQuery();
+            //}
+            var db = new AppDbContext();
+            db.Categories.Add(new Category {CategoryName = category});
+            addToDb = db.SaveChanges();
             return addToDb;
         }
 
         private static void PrintCategoriesView(int left, int top)
         {
-            DataSet dataSet = new DataSet();
-
-            string sqlCommandText = "Select * From Categories";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommandText, connection);
-
-                dataAdapter.Fill(dataSet, "Categories");
-            }
+            var db = new AppDbContext();
 
             Console.SetCursorPosition(left, top);
             Console.WriteLine($"{"ID",-5}{"Category",-15}{"Inventory",-10}");
@@ -1309,10 +1303,10 @@ namespace ProductManagerV_EF
             Console.WriteLine(new string('=', 30));
 
             int n = 0;
-            foreach (DataRow dataRow in dataSet.Tables["Categories"].Rows)
+            foreach (var category in db.Categories)
             {
                 Console.SetCursorPosition(left, top + 2 + n);
-                Console.WriteLine($"{dataRow["ID"],-5}{dataRow["Category"],-15}{dataRow["Inventory"],-10}");
+                Console.WriteLine($"{category.CategoryId,-5}{category.CategoryName,-15}{category.Inventory,-10}");
                 n++;
             }
         }
