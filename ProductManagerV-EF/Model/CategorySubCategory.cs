@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ProductManagerV_EF.Model
+﻿namespace ProductManagerV_EF.Model
 {
     public class CategorySubCategory
     {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ProductManagerV_EF.Model
 {
@@ -9,10 +7,6 @@ namespace ProductManagerV_EF.Model
         public Category(string categoryName)
         {
             CategoryName = categoryName;
-        }
-
-        public Category()
-        {
         }
 
         public int CategoryId { get; set; }

@@ -14,12 +14,6 @@ namespace ProductManagerV_EF.Model
             Description = description;
         }
 
-        public Product()
-        {
-
-        }
-        public int FK_Categories { get; set; }
-
         public int ProductId { get; set; }
         public string ArticleNumber { get; set; }
         public string Name { get; set; }
@@ -29,5 +23,9 @@ namespace ProductManagerV_EF.Model
         public string Description { get; set; }
 
         public IList<ProductCategory> ProductCategories { get; set; }
+        //public IEnumerator GetEnumerator()
+        //{
+        //    throw new System.NotImplementedException();
+        //}
     }
 }
