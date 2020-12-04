@@ -42,6 +42,8 @@ namespace ProductManagerV_EF
                 do
                 {
                     Console.SetCursorPosition(44, 12);
+                    Console.WriteLine("              ");
+                    Console.SetCursorPosition(44, 12);
                     menuOption = Console.ReadKey().KeyChar.ToString();
                 } while (!menuOptionRegex.IsMatch(menuOption));
 
@@ -83,6 +85,8 @@ namespace ProductManagerV_EF
                             do
                             {
                                 Console.SetCursorPosition(44, 16);
+                                Console.WriteLine("              ");
+                                Console.SetCursorPosition(44, 16);
                                 categoryMenuOption = Console.ReadKey();
 
                                 if (categoryMenuOption.Key == ConsoleKey.Escape)
@@ -123,9 +127,12 @@ namespace ProductManagerV_EF
                                     Console.SetCursorPosition(35, 1);
                                     Console.WriteLine(">>  Category and SubCategory Tables  <<");
 
-                                    PrintCategoryMethods.PrintCategoriesView(25, 8);
+                                    Console.SetCursorPosition(28, 6);
+                                    Console.WriteLine("    Category                                    SubCategory");
 
-                                    PrintCategoryMethods.PrintSubCategoriesView(75, 8);
+                                    PrintCategoryMethods.PrintCategoriesView(25, 9);
+
+                                    PrintCategoryMethods.PrintSubCategoriesView(75, 9);
 
                                     doCaseOneAgain = true;
 
