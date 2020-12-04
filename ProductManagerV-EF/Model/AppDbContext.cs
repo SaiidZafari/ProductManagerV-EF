@@ -8,7 +8,7 @@ namespace ProductManagerV_EF.Model
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=SAIID-PC\SQL19; Database=ProductManagerVEF; Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@"Server=.; Database=ProductManagerV-EF; Trusted_Connection=true");
         }
 
         public DbSet<Product> Products { get; set; }

@@ -239,8 +239,7 @@ namespace ProductManagerV_EF.Domain.Category
                 } while (!fkCategoryRegex.IsMatch(subid ?? string.Empty));
 
                 int subId = int.Parse(subid ?? string.Empty);
-
-                //bool answerReact;
+                
                 Regex answerRegex = new Regex(@"[YN]");
                 string answer;
                 do

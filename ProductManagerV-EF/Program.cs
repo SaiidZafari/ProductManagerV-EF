@@ -215,7 +215,7 @@ namespace ProductManagerV_EF
                             {
                                 case EnumsMethods.ArticleMenu.AddArticle:
 
-                                    doItAgain = AddProducts.AddProduct(left, top, db);
+                                    doItAgain = AddProducts.AddProduct(left, top);
 
                                     break;
                                 case EnumsMethods.ArticleMenu.SearchArticle:

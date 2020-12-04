@@ -1,15 +1,19 @@
-﻿using System;
+﻿using ProductManagerV_EF.Model;
+using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
-using ProductManagerV_EF.Model;
 
 namespace ProductManagerV_EF.Domain.Product
 {
     class AddProducts
     {
-        public static bool AddProduct(int left, int top, AppDbContext db)
+        public static bool AddProduct(int left, int top)
         {
             bool doItAgain;
+
+            var db = new AppDbContext();
+
             do
             {
                 Console.Clear();
@@ -62,36 +66,20 @@ namespace ProductManagerV_EF.Domain.Product
                         articleNumber = "Z999Z99";
                     }
 
-                    foreach (var product in db.Products)
+                    var newProduct = db.Products.FirstOrDefault(p => p.ArticleNumber == articleNumber);
+
+                    if (newProduct != null)
                     {
-                        if (product.ArticleNumber == articleNumber)
-                        {
-                            Console.SetCursorPosition(left, top + 10);
-                            Console.WriteLine("                                              ");
-                            Console.SetCursorPosition(left, top + 10);
-                            Console.Write(" This Article is already registered !");
-                            Thread.Sleep(2000);
-                            Console.SetCursorPosition(left, top + 10);
-                            Console.WriteLine("                                      ");
-                            articleNumber = "Invalid";
-                        }
+                        Console.SetCursorPosition(left, top + 10);
+                        Console.WriteLine("                                              ");
+                        Console.SetCursorPosition(left, top + 10);
+                        Console.Write(" This Article is already registered !");
+                        Thread.Sleep(2000);
+                        Console.SetCursorPosition(left, top + 10);
+                        Console.WriteLine("                                      ");
+                        articleNumber = "Invalid";
                     }
 
-
-                    foreach (var product in db.Products)
-                    {
-                        if (product.ArticleNumber == articleNumber)
-                        {
-                            Console.SetCursorPosition(left, top + 10);
-                            Console.WriteLine("                                              ");
-                            Console.SetCursorPosition(left, top + 10);
-                            Console.Write(" This Article is already registered !");
-                            Thread.Sleep(2000);
-                            Console.SetCursorPosition(left, top + 10);
-                            Console.WriteLine("                                      ");
-                            articleNumber = "Invalid";
-                        }
-                    }
                 } while (!articleNumberRegex.IsMatch(articleNumber ?? string.Empty));
 
                 if (articleNumber == "Z999Z99")
@@ -100,30 +88,18 @@ namespace ProductManagerV_EF.Domain.Product
                     break;
                 }
 
-
                 Console.SetCursorPosition(left + 18, top + 2);
                 Console.WriteLine(articleNumber);
 
                 Model.Product products = new Model.Product(
-                    articleNumber, 
-                    ProductMethods.AddName(left, top), 
-                    ProductMethods.AddMaterial(left, top), 
-                    ProductMethods.AddColor(left, top), 
+                    articleNumber,
+                    ProductMethods.AddName(left, top),
+                    ProductMethods.AddMaterial(left, top),
+                    ProductMethods.AddColor(left, top),
                     ProductMethods.AddPrice(left, top),
                     ProductMethods.AddDescription(left, top));
 
                 db.Products.Add(products);
-
-                //db.Products.Add(new Model.Product
-                //{
-                //    ArticleNumber = articleNumber,
-                //    Name = ProductMethods.AddName(left, top),
-                //    Price = ProductMethods.AddPrice(left, top),
-                //    Material = ProductMethods.AddMaterial(left, top),
-                //    Color = ProductMethods.AddColor(left, top),
-                //    Description = ProductMethods.AddDescription(left, top)
-                //});
-
 
                 Console.SetCursorPosition(left, top + 10);
                 Console.WriteLine($"Would you please confirm the Information above? Y/N ");
