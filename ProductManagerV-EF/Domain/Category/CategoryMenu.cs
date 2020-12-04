@@ -151,66 +151,6 @@ namespace ProductManagerV_EF.Domain.Category
                 Console.SetCursorPosition(42, 25);
                 Console.ReadKey();
 
-
-
-
-
-                //    if (answer == "Y" || answer == "N")
-                //        {
-                //            var pc = db.ProductCategories.FirstOrDefault(x =>
-                //                x.CategoryId == selectedId);
-
-                //            if (pc != null && pc.CategoryId == selectedId && pc.ProductId == productId)
-                //            {
-                //                Console.SetCursorPosition(40, 25);
-                //                Console.WriteLine($"This combination is already Exist ! ");
-                //                Thread.Sleep(2000);
-                //                Console.SetCursorPosition(40, 25);
-                //                Console.WriteLine("                                       ");
-                //                answerReact = false;
-                //                answer = "N";
-                //            }
-                //            else
-                //            {
-                //                answerReact = false;
-                //                answer = "Y";
-                //            }
-                //        }
-                //        else
-                //        {
-                //            answerReact = true;
-                //            answer = "N";
-                //        }
-
-
-                //    if (answer == "Y")
-                //    {
-                //        db.ProductCategories.AddRange(new ProductCategory
-                //        {
-                //            ProductId = productId,
-                //            CategoryId = selectedId
-                //        });
-
-                //        db.SaveChanges();
-
-                //        ProductPrintMethods.CleanProductView(39, 8, 12);
-                //        PrintCategoryMethods.PrintChainProdToCatView(39,8);
-                //    }
-                //    else
-                //    {
-                //        Console.SetCursorPosition(5, 25);
-                //        Console.WriteLine("No change made ");
-                //        Thread.Sleep(2000);
-                //    }
-
-
-                //    ProductPrintMethods.PrintProductView(79, 8);
-
-                //    Console.SetCursorPosition(5, 25);
-                //    Console.WriteLine(" Press any key to continue ...      ");
-                //    Console.SetCursorPosition(42, 25);
-                //    Console.ReadKey();
-
             }
             else
             {
@@ -222,11 +162,8 @@ namespace ProductManagerV_EF.Domain.Category
                 Console.WriteLine("                  ");
             }
 
-            ////doCaseOneAgain = true;
-            ////return doCaseOneAgain;
-
             return true;
-            
+
         }
 
 
@@ -303,7 +240,8 @@ namespace ProductManagerV_EF.Domain.Category
 
                 int subId = int.Parse(subid ?? string.Empty);
 
-                bool answerReact;
+                //bool answerReact;
+                Regex answerRegex = new Regex(@"[YN]");
                 string answer;
                 do
                 {
@@ -313,49 +251,51 @@ namespace ProductManagerV_EF.Domain.Category
                     Console.SetCursorPosition(72, 25);
                     Console.WriteLine("                                            ");
                     Console.SetCursorPosition(72, 25);
-                    answer = Console.ReadLine()?.ToUpper();
-                    Console.SetCursorPosition(40, 25);
-                    Console.WriteLine(
-                        "                                                               ");
-                    if (answer == "Y" || answer == "N")
-                    {
-                        var pc = db.CategorySubCategories.FirstOrDefault(x =>
-                            x.CategoryId == selectedId);
+                    answer = Console.ReadLine().ToUpper();
+                } while (!answerRegex.IsMatch(answer));
 
-                        if (pc != null && pc.CategoryId == selectedId && pc.SubCategoryId == subId)
-                        {
-                            Console.SetCursorPosition(40, 25);
-                            Console.WriteLine($"This combination is already Exist ! ");
-                            Thread.Sleep(2000);
-                            Console.SetCursorPosition(40, 25);
-                            Console.WriteLine("                                       ");
-                            answerReact = false;
-                            answer = "N";
-                        }
-                        else
-                        {
-                            answerReact = false;
-                            answer = "Y";
-                        }
-                    }
-                    else
-                    {
-                        answerReact = true;
-                        answer = "N";
-                    }
-                } while (answerReact);
+                Console.SetCursorPosition(40, 25);
+                Console.WriteLine("                                           ");
+
 
                 if (answer == "Y")
                 {
-                    db.CategorySubCategories.AddRange(new CategorySubCategory
+                    var pc = db.CategorySubCategories.FirstOrDefault(x => x.CategoryId == selectedId);
+
+                    var selectedSubCategory = db.SubCategories.FirstOrDefault(sc => sc.SubCategoryId == subId);
+
+                    if (selectedSubCategory == null)
                     {
-                        SubCategoryId = subId,
-                        CategoryId = selectedId
-                    });
+                        Console.SetCursorPosition(5, 24);
+                        Console.WriteLine("Invalid ID ...   ");
+                        Thread.Sleep(2000);
 
-                    db.SaveChanges();
+                        Console.SetCursorPosition(5, 24);
+                        Console.WriteLine("                  ");
+                    }
+                    else if (pc.CategoryId == selectedId && pc.SubCategoryId == subId)
+                    {
+                        Console.SetCursorPosition(40, 25);
+                        Console.WriteLine($"This combination is already Exist ! ");
+                        Thread.Sleep(2000);
+                        Console.SetCursorPosition(40, 25);
+                        Console.WriteLine("                                       ");
+                        //answerReact = false;
+                        answer = "N";
+                    }
+                    else
+                    {
+                        db.CategorySubCategories.AddRange(new CategorySubCategory
+                        {
+                            SubCategoryId = subId,
+                            CategoryId = selectedId
+                        });
 
-                    PrintCategoryMethods.PrintChainCatToSubView(66, 8);
+                        db.SaveChanges();
+
+                        ProductPrintMethods.CleanProductView(66, 8, 12);
+                        PrintCategoryMethods.PrintChainCatToSubView(66, 8);
+                    }
                 }
                 else
                 {
@@ -364,13 +304,13 @@ namespace ProductManagerV_EF.Domain.Category
                     Thread.Sleep(2000);
                 }
 
-
                 PrintCategoryMethods.PrintSubCategoriesView(100, 8);
 
                 Console.SetCursorPosition(5, 25);
                 Console.WriteLine(" Press any key to continue ...      ");
                 Console.SetCursorPosition(42, 25);
                 Console.ReadKey();
+
 
             }
             else
