@@ -99,7 +99,7 @@ namespace ProductManagerV_EF.Domain.Category
 
                 if (answer == "Y")
                 {
-                    var pc = db.ProductCategories.FirstOrDefault(x => x.CategoryId == selectedId);
+                    var pc = db.ProductCategories.FirstOrDefault(x => x.CategoryId == selectedId && x.ProductId == productId);
 
                     var selectedProduct = db.Products.FirstOrDefault(p => p.ProductId == productId);
 
@@ -112,7 +112,7 @@ namespace ProductManagerV_EF.Domain.Category
                         Console.SetCursorPosition(5, 24);
                         Console.WriteLine("                  ");
                     }
-                    else if (pc != null && pc.CategoryId == selectedId && pc.ProductId == productId)
+                    else if (pc != null)
                     {
                         Console.SetCursorPosition(40, 25);
                         Console.WriteLine($"This combination is already Exist ! ");
@@ -259,7 +259,7 @@ namespace ProductManagerV_EF.Domain.Category
 
                 if (answer == "Y")
                 {
-                    var pc = db.CategorySubCategories.FirstOrDefault(x => x.CategoryId == selectedId);
+                    var pc = db.CategorySubCategories.FirstOrDefault(x => x.CategoryId == selectedId && x.SubCategoryId == subId);
 
                     var selectedSubCategory = db.SubCategories.FirstOrDefault(sc => sc.SubCategoryId == subId);
 
@@ -272,7 +272,7 @@ namespace ProductManagerV_EF.Domain.Category
                         Console.SetCursorPosition(5, 24);
                         Console.WriteLine("                  ");
                     }
-                    else if (pc.CategoryId == selectedId && pc.SubCategoryId == subId)
+                    else if (pc != null)
                     {
                         Console.SetCursorPosition(40, 25);
                         Console.WriteLine($"This combination is already Exist ! ");
