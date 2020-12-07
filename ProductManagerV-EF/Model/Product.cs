@@ -23,5 +23,9 @@ namespace ProductManagerV_EF.Model
         public string Description { get; set; }
 
         public IList<ProductCategory> ProductCategories { get; set; }
+        //public IEnumerator GetEnumerator()
+        //{
+        //    throw new System.NotImplementedException();
+        //}
     }
 }

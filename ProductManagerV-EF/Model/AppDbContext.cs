@@ -8,7 +8,7 @@ namespace ProductManagerV_EF.Model
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=SAIID-PC\SQL19; Database=ProductManagerV-EF; Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@"Server=SAIID-PC\SQL19; Database=ProductManagerVEF; Trusted_Connection=true");
         }
 
         public DbSet<Product> Products { get; set; }
@@ -24,8 +24,8 @@ namespace ProductManagerV_EF.Model
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProductCategory>().HasKey(c => new { c.ProductId, c.CategoryId });
+
             modelBuilder.Entity<CategorySubCategory>().HasKey(c => new { c.CategoryId, c.SubCategoryId });
         }
-
     }
 }
